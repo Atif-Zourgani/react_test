@@ -31,7 +31,7 @@ describe('TodoItem', () => {
     
     // Vérification des boutons
     expect(screen.getByText('Supprimer')).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: '👁️' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Masquer/ })).not.toBeInTheDocument();
   });
 
   test('affiche correctement une tâche complétée', () => {
@@ -44,8 +44,8 @@ describe('TodoItem', () => {
     // Vérification du style
     expect(screen.getByText('Tâche de test')).toHaveClass('completed');
     
-    // Vérification du bouton de visibilité
-    expect(screen.getByRole('button', { name: '👁️' })).toBeInTheDocument();
+    // Vérification du bouton de visibilité via aria-label
+    expect(screen.getByRole('button', { name: /Masquer/ })).toBeInTheDocument();
   });
 
   test('gère le clic sur la checkbox', () => {
@@ -69,9 +69,8 @@ describe('TodoItem', () => {
   test('gère le clic sur le bouton de visibilité', () => {
     render(<TodoItem {...mockProps} completed={true} />);
     
-    const visibilityButton = screen.getByRole('button', { name: '👁️' });
+    const visibilityButton = screen.getByRole('button', { name: /Masquer/ });
     fireEvent.click(visibilityButton);
-    
     // TODO: Ajouter la vérification de la fonction de visibilité une fois implémentée
   });
 
